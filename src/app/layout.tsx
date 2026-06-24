@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -40,6 +41,10 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-dark text-cream antialiased">
         {children}
+        <Script
+          src="https://w.soundcloud.com/player/api.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

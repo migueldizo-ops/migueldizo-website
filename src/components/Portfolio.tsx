@@ -1,41 +1,29 @@
 import AudioPlayer from "./AudioPlayer";
 
-const PROJECTS = [
+const TRACKS = [
   {
     number: "01",
-    title: "Eternal Ascent",
-    genre: "Epic Orchestral",
-    track: "Main Theme — Full Orchestra",
-    duration: "3:24",
-    description:
-      "Feature film score blending 80-piece orchestra with synthetic textures for a sweeping science fiction epic.",
+    title: "Cosmic Mirage",
+    genre: "Hybrid Trailer",
+    soundcloudUrl: "https://soundcloud.com/ormadz/cosmic-mirage",
   },
   {
     number: "02",
-    title: "Neon Labyrinth",
-    genre: "Game OST",
-    track: "Opening Sequence",
-    duration: "4:12",
-    description:
-      "Adaptive game soundtrack fusing cyberpunk synths with live guitar for an action RPG set in a dystopian city.",
+    title: "Welcome to the Future",
+    genre: "Orchestral Hybrid Game Music",
+    soundcloudUrl: "https://soundcloud.com/ormadz/welcome-to-the-future",
   },
   {
     number: "03",
-    title: "The Weight of Silence",
-    genre: "TV Drama",
-    track: "End Credits",
-    duration: "2:58",
-    description:
-      "Intimate chamber score for a six-part limited series exploring grief and memory through solo piano and strings.",
+    title: "The Space Between Us",
+    genre: "Romance & Drama — Film and TV",
+    soundcloudUrl: "https://soundcloud.com/ormadz/the-space-between-us",
   },
   {
     number: "04",
-    title: "Golden Hour",
-    genre: "Brand · Commercial",
-    track: "Full Mix",
-    duration: "1:47",
-    description:
-      "Warm, aspirational brand piece for a global lifestyle campaign — acoustic guitar, pizzicato strings, and soft brass.",
+    title: "Wrath of Anansi",
+    genre: "Rock Hybrid Trailer",
+    soundcloudUrl: "https://soundcloud.com/ormadz/wrath-of-anansi",
   },
 ];
 
@@ -55,32 +43,27 @@ export default function Portfolio() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[rgba(255,255,255,0.06)]">
-        {PROJECTS.map((project) => (
+        {TRACKS.map((track) => (
           <article
-            key={project.number}
-            className="group bg-dark p-8 lg:p-10 relative overflow-hidden cursor-pointer hover:bg-[#111113] transition-colors duration-300"
+            key={track.number}
+            className="group bg-dark p-8 lg:p-10 relative overflow-hidden"
           >
-            {/* Hover accent bar */}
             <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-accent group-hover:w-full transition-all duration-500 ease-out" />
 
             <div className="flex items-start justify-between mb-6">
               <span className="font-display text-7xl font-light text-cream/[0.06] leading-none select-none">
-                {project.number}
+                {track.number}
               </span>
               <span className="text-[0.65rem] tracking-[0.18em] uppercase text-accent/70 font-sans mt-2">
-                {project.genre}
+                {track.genre}
               </span>
             </div>
 
-            <h3 className="font-display text-3xl md:text-4xl font-light text-cream mb-3 leading-tight">
-              {project.title}
+            <h3 className="font-display text-3xl md:text-4xl font-light text-cream leading-tight">
+              {track.title}
             </h3>
 
-            <p className="text-cream/45 text-sm font-sans leading-relaxed mb-2">
-              {project.description}
-            </p>
-
-            <AudioPlayer track={project.track} duration={project.duration} />
+            <AudioPlayer soundcloudUrl={track.soundcloudUrl} />
           </article>
         ))}
       </div>
