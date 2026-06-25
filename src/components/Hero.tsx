@@ -24,8 +24,12 @@ export default function Hero() {
       {/* Overlay — darker on mobile for readability */}
       <div className="absolute inset-0 bg-[rgba(14,14,16,0.85)] md:bg-[rgba(14,14,16,0.75)]" />
 
+      {/* Letterbox bars */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-[#0e0e10] z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-[#0e0e10] z-10" />
+
       {/* Content */}
-      <div className="relative z-10 px-6 lg:px-12 max-w-7xl mx-auto w-full pt-28 pb-24 flex flex-col justify-center">
+      <div className="relative z-20 px-6 lg:px-12 max-w-7xl mx-auto w-full pt-28 pb-24 flex flex-col justify-center">
         <p className="text-accent text-xs tracking-[0.22em] uppercase mb-8 font-sans">
           Composer &amp; Music Producer &nbsp;—&nbsp; Film · TV · Games · Trailers · Indie Artists · Bands · Content Creators
         </p>
