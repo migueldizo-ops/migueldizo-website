@@ -9,38 +9,39 @@ const TAGS = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[88vh] overflow-hidden flex flex-col justify-center">
-      {/* Background video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
+    <section className="relative min-h-[88vh] flex flex-col justify-center">
+      {/* Bounded video zone: below eyebrow, above tag pills */}
+      <div
         style={{
           position: "absolute",
           top: "80px",
           bottom: "120px",
           left: 0,
           right: 0,
-          width: "100%",
-          height: "calc(100% - 200px)",
-          objectFit: "contain",
-          objectPosition: "center center",
-          background: "#0e0e10",
+          overflow: "hidden",
+          zIndex: 0,
         }}
       >
-        <source src="/Reel.mp4" type="video/mp4" />
-      </video>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-contain bg-[#0e0e10]"
+        >
+          <source src="/Reel.mp4" type="video/mp4" />
+        </video>
 
-      {/* Overlay — darker on mobile for readability */}
-      <div className="absolute inset-0 bg-[rgba(14,14,16,0.85)] md:bg-[rgba(14,14,16,0.75)]" />
+        {/* Overlay confined to the video zone */}
+        <div className="absolute inset-0 bg-[rgba(14,14,16,0.85)] md:bg-[rgba(14,14,16,0.75)]" />
 
-      {/* Cinematic edge fades */}
-      <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-b from-[#0e0e10] to-transparent z-10" />
-      <div className="absolute bottom-0 left-0 right-0 h-[120px] bg-gradient-to-t from-[#0e0e10] to-transparent z-10" />
+        {/* Gradient fades at the edges of the video zone */}
+        <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-b from-[#0e0e10] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-[120px] bg-gradient-to-t from-[#0e0e10] to-transparent" />
+      </div>
 
-      {/* Content */}
-      <div className="relative z-20 px-6 lg:px-12 max-w-7xl mx-auto w-full pt-28 pb-24 flex flex-col justify-center">
+      {/* Content — above the video zone */}
+      <div className="relative px-6 lg:px-12 max-w-7xl mx-auto w-full pt-28 pb-24 flex flex-col justify-center" style={{ zIndex: 10 }}>
         <p className="text-accent text-xs tracking-[0.22em] uppercase mb-8 font-sans">
           Composer &amp; Music Producer &nbsp;—&nbsp; Film · TV · Games · Trailers · Indie Artists · Bands · Content Creators
         </p>
