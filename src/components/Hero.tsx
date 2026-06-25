@@ -16,7 +16,7 @@ export default function Hero() {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-contain bg-[#0e0e10]"
+        className="absolute top-0 left-0 right-0 h-[75%] w-full object-contain bg-[#0e0e10]"
       >
         <source src="/Reel.mp4" type="video/mp4" />
       </video>
