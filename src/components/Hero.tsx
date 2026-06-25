@@ -16,7 +16,18 @@ export default function Hero() {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 right-0 h-[75%] w-full object-contain bg-[#0e0e10]"
+        style={{
+          position: "absolute",
+          top: "80px",
+          bottom: "120px",
+          left: 0,
+          right: 0,
+          width: "100%",
+          height: "calc(100% - 200px)",
+          objectFit: "contain",
+          objectPosition: "center center",
+          background: "#0e0e10",
+        }}
       >
         <source src="/Reel.mp4" type="video/mp4" />
       </video>
