@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "#work", label: "Work" },
@@ -32,9 +33,19 @@ export default function Nav() {
       <nav className="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
         <a
           href="#"
-          className="font-display text-xl text-cream tracking-wide hover:text-accent transition-colors duration-200"
+          className="flex items-center gap-3 hover:opacity-80 transition-opacity duration-200"
         >
-          Miguel Dizo
+          <Image
+            src="/logo.PNG"
+            alt="Miguel Dizo logo"
+            height={36}
+            width={200}
+            className="h-7 md:h-9 w-auto"
+            priority
+          />
+          <span className="font-display text-xl text-cream tracking-wide">
+            Miguel Dizo
+          </span>
         </a>
 
         {/* Desktop */}

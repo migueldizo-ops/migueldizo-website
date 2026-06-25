@@ -16,7 +16,7 @@ const SERVICES = [
     ),
     title: "Film / TV / Game Scoring",
     description:
-      "Full-scale orchestral and hybrid scores tailored to picture — from intimate indie films to AAA game titles.",
+      "Original cinematic scores for film, TV, and games — plus full production for indie artists, bands, and content creators across Rock, Pop, OPM, and beyond.",
   },
   {
     icon: (
