@@ -10,17 +10,20 @@ const TAGS = [
 export default function Hero() {
   return (
     <section
-      className="flex flex-col px-6 lg:px-12 max-w-7xl mx-auto"
+      className="flex flex-col"
       style={{ position: "relative", minHeight: "88vh" }}
     >
-      {/* Eyebrow — clean #0e0e10, no video */}
-      <div className="pt-28 pb-8" style={{ position: "relative", zIndex: 10 }}>
+      {/* Eyebrow — constrained, clean #0e0e10 */}
+      <div
+        className="px-6 lg:px-12 max-w-7xl mx-auto w-full pt-28 pb-8"
+        style={{ position: "relative", zIndex: 10 }}
+      >
         <p className="text-accent text-xs tracking-[0.22em] uppercase font-sans">
           Composer &amp; Music Producer &nbsp;—&nbsp; Film · TV · Games · Trailers · Indie Artists · Bands · Content Creators
         </p>
       </div>
 
-      {/* Video zone — headline, subtitle, buttons only */}
+      {/* Video zone — full bleed, edge to edge */}
       <div style={{ position: "relative", overflow: "hidden", flex: 1 }}>
 
         {/* Video */}
@@ -58,7 +61,7 @@ export default function Hero() {
           }}
         />
 
-        {/* Top fade */}
+        {/* Top fade only */}
         <div
           style={{
             position: "absolute",
@@ -71,7 +74,7 @@ export default function Hero() {
           }}
         />
 
-        {/* Bottom fade */}
+        {/* Bottom fade only */}
         <div
           style={{
             position: "absolute",
@@ -84,8 +87,11 @@ export default function Hero() {
           }}
         />
 
-        {/* Headline, subtitle, buttons */}
-        <div style={{ position: "relative", zIndex: 10, padding: "48px 0" }}>
+        {/* Headline, subtitle, buttons — constrained width, more vertical breathing room */}
+        <div
+          className="px-6 lg:px-12 max-w-7xl mx-auto w-full"
+          style={{ position: "relative", zIndex: 10, paddingTop: "72px", paddingBottom: "72px" }}
+        >
           <h1 className="font-display font-light text-[clamp(3.5rem,9vw,7.5rem)] leading-[0.93] text-cream mb-8 max-w-5xl">
             Turning{" "}
             <em className="italic text-accent not-italic" style={{ fontStyle: "italic" }}>
@@ -118,8 +124,11 @@ export default function Hero() {
 
       </div>
 
-      {/* Tag pills — clean #0e0e10, no video */}
-      <div className="pt-8 pb-16" style={{ position: "relative", zIndex: 10 }}>
+      {/* Tag pills — constrained, clean #0e0e10 */}
+      <div
+        className="px-6 lg:px-12 max-w-7xl mx-auto w-full pt-8 pb-16"
+        style={{ position: "relative", zIndex: 10 }}
+      >
         <div className="flex flex-wrap gap-2">
           {TAGS.map((tag) => (
             <span
