@@ -9,39 +9,79 @@ const TAGS = [
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[88vh] flex flex-col justify-center">
-      {/* Bounded video zone: below eyebrow, above tag pills */}
-      <div
+    <section style={{ position: "relative", minHeight: "88vh" }}>
+
+      {/* 1. Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         style={{
           position: "absolute",
-          top: "80px",
-          bottom: "120px",
+          top: 0,
           left: 0,
           right: 0,
-          overflow: "hidden",
+          bottom: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center",
           zIndex: 0,
         }}
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-contain bg-[#0e0e10]"
-        >
-          <source src="/Reel.mp4" type="video/mp4" />
-        </video>
+        <source src="/Reel.mp4" type="video/mp4" />
+      </video>
 
-        {/* Overlay confined to the video zone */}
-        <div className="absolute inset-0 bg-[rgba(14,14,16,0.85)] md:bg-[rgba(14,14,16,0.75)]" />
+      {/* 2. Dark overlay */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(14, 14, 16, 0.72)",
+          zIndex: 1,
+        }}
+      />
 
-        {/* Gradient fades at the edges of the video zone */}
-        <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-b from-[#0e0e10] to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-[120px] bg-gradient-to-t from-[#0e0e10] to-transparent" />
-      </div>
+      {/* 3. Top gradient fade */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "140px",
+          background: "linear-gradient(to bottom, #0e0e10 0%, transparent 100%)",
+          zIndex: 2,
+        }}
+      />
 
-      {/* Content — above the video zone */}
-      <div className="relative px-6 lg:px-12 max-w-7xl mx-auto w-full pt-28 pb-24 flex flex-col justify-center" style={{ zIndex: 10 }}>
+      {/* 4. Bottom gradient fade */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "140px",
+          background: "linear-gradient(to top, #0e0e10 0%, transparent 100%)",
+          zIndex: 2,
+        }}
+      />
+
+      {/* 5. Content */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          padding: "80px 48px 60px",
+          maxWidth: "1280px",
+          margin: "0 auto",
+        }}
+      >
         <p className="text-accent text-xs tracking-[0.22em] uppercase mb-8 font-sans">
           Composer &amp; Music Producer &nbsp;—&nbsp; Film · TV · Games · Trailers · Indie Artists · Bands · Content Creators
         </p>
@@ -86,6 +126,7 @@ export default function Hero() {
           ))}
         </div>
       </div>
+
     </section>
   );
 }
