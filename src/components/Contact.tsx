@@ -11,6 +11,15 @@ const PROJECT_TYPES = [
   "Other",
 ];
 
+const CONTACT_EMAIL = "diz.migz@gmail.com";
+
+// Set NEXT_PUBLIC_FORMSPREE_ID in .env.local (and in your host's env settings)
+// to deliver messages straight to your inbox. Without it, the form falls back
+// to opening the visitor's email app with the message pre-filled.
+const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+
+type Status = "idle" | "sending" | "sent" | "mailto" | "error";
+
 export default function Contact() {
   const [form, setForm] = useState({
     name: "",
@@ -18,7 +27,7 @@ export default function Contact() {
     projectType: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
   const update = (
     e: React.ChangeEvent<
@@ -26,10 +35,48 @@ export default function Contact() {
     >
   ) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const openMailClient = () => {
+    const subject = `${form.projectType} enquiry from ${form.name}`;
+    const body = `${form.message}\n\n${form.name}\n${form.email}`;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
   };
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    // No form service configured: hand the message to the visitor's email app.
+    if (!FORMSPREE_ID) {
+      openMailClient();
+      setStatus("mailto");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          projectType: form.projectType,
+          message: form.message,
+          _replyto: form.email,
+          _subject: `${form.projectType} enquiry from ${form.name}`,
+        }),
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const done = status === "sent" || status === "mailto";
 
   const inputBase =
     "w-full bg-transparent border border-cream/10 text-cream text-sm font-sans px-4 py-3 outline-none focus:border-accent/60 transition-colors duration-200 placeholder:text-cream/25";
@@ -49,7 +96,7 @@ export default function Contact() {
             Let&apos;s make<br />something.
           </h2>
           <p className="text-cream/45 text-sm font-sans leading-relaxed mb-10 max-w-sm">
-            Have a project in mind or just want to explore what's possible?
+            Have a project in mind or just want to explore what&apos;s possible?
             Send a message — I read every enquiry personally and typically
             respond within 48 hours.
           </p>
@@ -58,17 +105,17 @@ export default function Contact() {
               Direct email
             </p>
             <a
-              href="mailto:miguel.dizo@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="font-display text-2xl text-cream hover:text-accent transition-colors duration-200"
             >
-              miguel.dizo@gmail.com
+              {CONTACT_EMAIL}
             </a>
           </div>
         </div>
 
         {/* Right — form */}
         <div>
-          {submitted ? (
+          {done ? (
             <div className="h-full flex flex-col justify-center py-12">
               <div className="w-10 h-10 rounded-full border border-accent flex items-center justify-center mb-6">
                 <svg
@@ -85,11 +132,34 @@ export default function Contact() {
                 </svg>
               </div>
               <h3 className="font-display text-3xl text-cream mb-3">
-                Message received.
+                {status === "sent" ? "Message received." : "Almost there."}
               </h3>
               <p className="text-cream/45 text-sm font-sans leading-relaxed">
-                Thanks for reaching out. I&apos;ll be in touch within 48 hours.
+                {status === "sent" ? (
+                  <>Thanks for reaching out. I&apos;ll be in touch within 48 hours.</>
+                ) : (
+                  <>
+                    Your email app should have opened with your message ready —
+                    just hit send. If nothing opened, email me directly at{" "}
+                    <a
+                      href={`mailto:${CONTACT_EMAIL}`}
+                      className="text-accent hover:text-[#b89fd6] transition-colors duration-200"
+                    >
+                      {CONTACT_EMAIL}
+                    </a>
+                    .
+                  </>
+                )}
               </p>
+              {status === "mailto" && (
+                <button
+                  type="button"
+                  onClick={() => setStatus("idle")}
+                  className="mt-6 self-start text-cream/40 hover:text-cream text-xs font-sans tracking-[0.12em] uppercase transition-colors duration-200"
+                >
+                  ← Back to form
+                </button>
+              )}
             </div>
           ) : (
             <form onSubmit={submit} className="flex flex-col gap-4">
@@ -141,11 +211,26 @@ export default function Contact() {
                 className={`${inputBase} resize-none`}
               />
 
+              {status === "error" && (
+                <p role="alert" className="text-sm font-sans text-[#e8a0a0]">
+                  Something went wrong sending your message. Please try again,
+                  or email me directly at{" "}
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="underline hover:text-cream transition-colors duration-200"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
+                  .
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="mt-2 px-8 py-4 bg-accent text-dark text-xs font-sans font-semibold tracking-[0.12em] uppercase hover:bg-[#b89fd6] transition-colors duration-200 self-start"
+                disabled={status === "sending"}
+                className="mt-2 px-8 py-4 bg-accent text-dark text-xs font-sans font-semibold tracking-[0.12em] uppercase hover:bg-[#b89fd6] transition-colors duration-200 self-start disabled:opacity-60 disabled:cursor-wait"
               >
-                Send message
+                {status === "sending" ? "Sending…" : "Send message"}
               </button>
             </form>
           )}

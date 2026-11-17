@@ -5,6 +5,8 @@ import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "#work", label: "Work" },
+  { href: "#videos", label: "Videos" },
+  { href: "#artists", label: "Artists" },
   { href: "#services", label: "Services" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
@@ -49,7 +51,7 @@ export default function Nav() {
         </a>
 
         {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-10">
+        <ul className="hidden md:flex items-center gap-6 lg:gap-10">
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href}>
               <a
@@ -97,7 +99,7 @@ export default function Nav() {
       {/* Mobile menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
-          open ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="bg-dark border-b border-[rgba(255,255,255,0.06)] px-6 py-6 flex flex-col gap-5">
